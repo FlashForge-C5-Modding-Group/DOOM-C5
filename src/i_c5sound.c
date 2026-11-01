@@ -28,8 +28,7 @@ float libsamplerate_scale = 0.65f;
 #define SFX_RATE 140      // PC speaker lumps and MUS music both tick at 140 Hz
 #define BASE_FREQ 175.0   // the tone of PC speaker value 1
 #define PWM_CLOCK 50000000
-#define MIN_NOTE_MS 20
-#define OCTAVE_UP 2        // effects and music play an octave above their written pitch
+#define MIN_NOTE_MS 10
 
 typedef struct { uint32_t at_ms; uint16_t freq; } segment_t;
 typedef struct { segment_t *segments; int count; uint32_t length_ms; } song_t;
@@ -71,7 +70,7 @@ static void set_tone(int freq, int duty_level) {
     pwm("set_wc", "1", "0", NULL, NULL);
     return;
   }
-  const int period = PWM_CLOCK / freq / OCTAVE_UP;
+  const int period = PWM_CLOCK / freq;
   const int h = period * duty_level / 200;
   snprintf(high, sizeof(high), "%d", h);
   snprintf(low, sizeof(low), "%d", period - h);
