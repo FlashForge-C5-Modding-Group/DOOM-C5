@@ -32,6 +32,7 @@ WATCHER=
 restore() {
     [ -n "$WATCHER" ] && kill "$WATCHER" 2>/dev/null
     cmd_pwm set_wc pc12 1 0 2>/dev/null
+    cmd_pwm set_prescale pc12 6 2>/dev/null  # what Klipper expects
     cmd_pwm disable_channels pc12 2>/dev/null
     [ -n "$LOOP" ] && kill -CONT "$LOOP" 2>/dev/null
 }

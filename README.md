@@ -55,7 +55,7 @@ USB keyboards work, plugged in before or during the game. The keys are classic D
 
 ## Sound
 
-The buzzer plays one tone at a time. Effects use the game file's PC speaker sounds, and music plays its highest note. An effect interrupts the music while it plays. Tones are set by running `cmd_pwm`, the same tool Klipper's buzzer uses, so very fast changes get skipped.
+Sound is mixed in software and played through the buzzer at 16 kHz over a 64 kHz PWM carrier, the method FastDoom uses on a PC speaker. Music plays every instrument as a square wave, with noise for drums, and effects use the game file's PC speaker sounds mixed on top. A real-time thread on the second CPU core writes each sample straight to the PWM driver.
 
 ## Settings
 
@@ -64,7 +64,7 @@ Set these as environment variables before `doom.sh`:
 | Variable | Default | Meaning |
 |---|---|---|
 | `DOOM_ROTATE` | `1` | `3` turns the picture and touch upside down |
-| `DOOM_BEEP_LEVEL` | `60` | Buzzer loudness, 0 to 100 |
+| `DOOM_BEEP_LEVEL` | `100` | Buzzer loudness, 0 to 100 |
 | `DOOM_WAD` | `freedoom1.wad` | Game file |
 
 ## Build
